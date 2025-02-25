@@ -1,0 +1,17 @@
+- name: Deploy Scientific Calculator
+  hosts: servers
+  tasks:
+    - name: Pull Docker Image
+      command: docker pull gupta9939/calculator_main_project_final:latest
+
+    - name: Stop Existing Container
+      command: docker stop calculator_container
+      ignore_errors: yes
+
+    - name: Remove Existing Container
+      command: docker rm calculator-container
+      ignore_errors: yes
+
+    - name: Run Docker Container
+      command: >
+        docker run -d --name calculator-container -p 8081:8081 gupta9939/calculator_main_project_final:latest
