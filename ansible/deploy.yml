@@ -1,17 +1,30 @@
 - name: Deploy Scientific Calculator
-  hosts: servers
+  hosts: all
+  become: true
+
   tasks:
-    - name: Pull Docker Image
+    - name: Pull Latest Docker Image
       command: docker pull gupta9939/calculator_main_project_final:latest
 
-    - name: Stop Existing Container
+    - name: Stop Existing Container (if running)
       command: docker stop calculator_container
       ignore_errors: yes
 
     - name: Remove Existing Container
-      command: docker rm calculator-container
+      command: docker rm calculator_container
       ignore_errors: yes
 
     - name: Run Docker Container
       command: >
-        docker run -d --name calculator-container -p 8081:8081 gupta9939/calculator_main_project_final:latest
+        docker run -d --name calculator_container 
+        -p 8002:8082 gupta9939/calculator_main_project_final:latest
+      args:
+        creates: /var/run/docker.sock
+
+    - name: Check Running Containers
+      command: docker ps
+      register: running_containers
+
+    - name: Show Running Containers
+      debug:
+        var: running_containers.stdout
