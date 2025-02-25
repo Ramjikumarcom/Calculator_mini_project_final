@@ -1,5 +1,5 @@
 - name: Deploy Scientific Calculator
-  hosts: all
+  hosts: calculator_server
   become: true
 
   tasks:
@@ -18,8 +18,6 @@
       command: >
         docker run -d --name calculator_container 
         -p 8002:8082 gupta9939/calculator_main_project_final:latest
-      args:
-        creates: /var/run/docker.sock
 
     - name: Check Running Containers
       command: docker ps
