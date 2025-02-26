@@ -1,2 +1,2 @@
 [calculator_server]
-172.16.231.252 ansible_user=ramji ansible_become=true
+172.16.231.252 ansible_user=ramji ansible_ssh_private_key_file=~/.ssh/id_rsa
