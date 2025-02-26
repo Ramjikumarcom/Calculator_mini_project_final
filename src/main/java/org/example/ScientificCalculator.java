@@ -43,7 +43,7 @@ public class ScientificCalculator {
                     System.out.println("Result: " + Math.pow(num, exponent));
                     break;
                 default:
-                    System.out.println("Please Enter Valid choice. Try again.");
+                    System.out.println("Please Enter Valid Choice. Try again.");
             }
         }
 
