@@ -29,21 +29,21 @@ public class ScientificCalculator {
 
             switch (choice) {
                 case 1:
-                    System.out.println("Result: " + Math.sqrt(num));
+                    System.out.println("Result: " + squareRoot(num));
                     break;
                 case 2:
                     System.out.println("Result: " + factorial((int) num));
                     break;
                 case 3:
-                    System.out.println("Result: " + Math.log(num));
+                    System.out.println("Result: " +  naturalLogarithm(num));
                     break;
                 case 4:
                     System.out.print("Enter the exponent (b): ");
                     double exponent = scanner.nextDouble();
-                    System.out.println("Result: " + Math.pow(num, exponent));
+                    System.out.println("Result: " + power(num, exponent));
                     break;
                 default:
-                    System.out.println("Please Enter Valid Choice. Try again.");
+                    System.out.println("Invalid choice. Try again.");
             }
         }
 
@@ -54,5 +54,18 @@ public class ScientificCalculator {
         if (n < 0) return -1;
         if (n == 0 || n == 1) return 1;
         return n * factorial(n - 1);
+    }
+
+    public static double squareRoot(double i) {
+      return  Math.sqrt(i);
+
+    }
+
+    public static double naturalLogarithm(double i) {
+        return Math.log(i);
+    }
+
+    public static double power(double i, double i1) {
+        return (int) Math.pow(i, i1);
     }
 }
