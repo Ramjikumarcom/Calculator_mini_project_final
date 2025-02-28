@@ -43,13 +43,12 @@
       debug:
         var: running_containers.stdout
 
-    # 🔥 **Health Check: Test if the app is running**
     - name: Test Application Endpoint
       uri:
         url: "http://localhost:8002"
         status_code: 200
       register: app_response
-      ignore_errors: yes  # Avoid failing the playbook if the test fails
+      ignore_errors: yes  
 
     - name: Display Application Response
       debug:
