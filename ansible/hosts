@@ -1,2 +1,2 @@
 [servers]
-172.16.231.252 ansible_user=ramji ansible_ssh_private_key_file=~/.ssh/id_rsa
+192.168.0.122 ansible_user=ramji ansible_ssh_private_key_file=~/.ssh/id_rsa
