@@ -3,41 +3,35 @@
   become: true
 
   tasks:
-    - name: Pull Latest Docker Image
+    - name: Install Docker if not installed
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Ensure Docker service is running
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Log in to Docker Hub
+      command: docker login -u your-dockerhub-username -p your-dockerhub-password
+      become: true
+
+    - name: Pull the latest Docker image
       command: docker pull gupta9939/calculator_main_project_final:latest
+      become: true
 
-    - name: Stop Existing Container (if running)
-      command: docker stop calculator_container
-      ignore_errors: yes
+    - name: Stop and remove existing container
+      shell: |
+        docker stop calculator_container || true
+        docker rm calculator_container || true
+      become: true
 
-    - name: Remove Existing Container
-      command: docker rm calculator_container
-      ignore_errors: yes
-
-    - name: Run Docker Container
+    - name: Run the container
       command: >
         docker run -d --name calculator_container 
         -p 8002:8082 gupta9939/calculator_main_project_final:latest
-
-    - name: Wait for container to start
-      pause:
-        seconds: 5
-
-    - name: Check Running Containers
-      command: docker ps
-      register: running_containers
-
-    - name: Show Running Containers
-      debug:
-        var: running_containers.stdout
-
-    - name: Test Application Endpoint
-      uri:
-        url: "http://localhost:8002"
-        status_code: 200
-      register: app_response
-      ignore_errors: yes  
-
-    - name: Display Application Response
-      debug:
-        var: app_response
+      become: true
