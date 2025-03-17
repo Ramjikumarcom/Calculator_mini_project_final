@@ -1,2 +1,2 @@
 [servers]
-172.16.231.252 ansible_user=ramji ansible_connection=local
+172.16.231.252 ansible_user=ramji ansible_become=true ansible_become_method=sudo
