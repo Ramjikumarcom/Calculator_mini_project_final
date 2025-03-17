@@ -1,5 +1,5 @@
 - name: Deploy Scientific Calculator
-  hosts: aws
+  hosts: servers
   become: true
 
   tasks:
