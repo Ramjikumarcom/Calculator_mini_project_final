@@ -1,37 +1,17 @@
 - name: Deploy Scientific Calculator
   hosts: servers
-  become: true
-
   tasks:
-    - name: Install Docker if not installed
-      apt:
-        name: docker.io
-        state: present
-        update_cache: yes
-      when: ansible_os_family == "Debian"
-
-    - name: Ensure Docker service is running
-      systemd:
-        name: docker
-        state: started
-        enabled: yes
-
-    - name: Log in to Docker Hub
-      command: docker login -u your-dockerhub-username -p your-dockerhub-password
-      become: true
-
-    - name: Pull the latest Docker image
+    - name: Pull Docker Image
       command: docker pull gupta9939/calculator_main_project_final:latest
-      become: true
 
-    - name: Stop and remove existing container
-      shell: |
-        docker stop calculator_container || true
-        docker rm calculator_container || true
-      become: true
+    - name: Stop Existing Container
+      command: docker stop calculator_container
+      ignore_errors: yes
 
-    - name: Run the container
+    - name: Remove Existing Container
+      command: docker rm calculator-container
+      ignore_errors: yes
+
+    - name: Run Docker Container
       command: >
-        docker run -d --name calculator_container 
-        -p 8002:8082 gupta9939/calculator_main_project_final:latest
-      become: true
+        docker run -d --name calculator-container -p 8081:8081 gupta9939/calculator_main_project_final:latest
