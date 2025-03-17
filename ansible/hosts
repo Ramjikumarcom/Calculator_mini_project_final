@@ -1,2 +1,2 @@
-[servers]
+[server]
 172.16.231.252 ansible_user=ramji ansible_connection=local
