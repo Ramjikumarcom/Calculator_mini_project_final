@@ -1,29 +1,17 @@
 - name: Deploy Scientific Calculator
   hosts: servers
-  become: true  # Run tasks as root (sudo)
   tasks:
     - name: Pull Docker Image
-      docker_image:
-        name: gupta9939/calculator_main_project_final:latest
-        source: pull
+      command: docker pull gupta9939/calculator_main_project_final:latest
 
     - name: Stop Existing Container
-      docker_container:
-        name: calculator_container
-        state: stopped
+      command: docker stop calculator_container
       ignore_errors: yes
 
     - name: Remove Existing Container
-      docker_container:
-        name: calculator_container
-        state: absent
+      command: docker rm calculator-container
       ignore_errors: yes
 
     - name: Run Docker Container
-      docker_container:
-        name: calculator_container
-        image: gupta9939/calculator_main_project_final:latest
-        state: started
-        restart_policy: always
-        ports:
-          - "8081:8081"
+      command: >
+        docker run -d --name calculator-container -p 8081:8081 gupta9939/calculator_main_project_final:latest
