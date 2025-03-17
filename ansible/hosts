@@ -1,2 +1,2 @@
-[aws]
-my-ec2-server ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/aws_key.pem ansible_become=true
+[servers]
+172.16.231.252 ansible_user=ramji ansible_connection=local
