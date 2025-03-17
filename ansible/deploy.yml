@@ -3,18 +3,6 @@
   become: true
 
   tasks:
-    - name: Install Docker (if not installed)
-      apt:
-        name: docker.io
-        state: present
-      when: ansible_os_family == "Debian"
-
-    - name: Ensure Docker service is running
-      systemd:
-        name: docker
-        state: started
-        enabled: yes
-
     - name: Pull Latest Docker Image
       command: docker pull gupta9939/calculator_main_project_final:latest
 
