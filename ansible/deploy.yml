@@ -1,17 +1,30 @@
 - name: Deploy Scientific Calculator
   hosts: servers
+  become: yes
   tasks:
     - name: Pull Docker Image
-      command: docker pull gupta9939/calculator_main_project_final:latest
+      docker_image:
+        name: gupta9939/calculator_main_project_final:latest
+        source: pull
+        force_source: yes  # Ensures the latest image is always pulled
 
-    - name: Stop Existing Container
-      command: docker stop calculator_container
+    - name: Stop Existing Container (if running)
+      docker_container:
+        name: calculator-container
+        state: stopped
       ignore_errors: yes
 
     - name: Remove Existing Container
-      command: docker rm calculator-container
-      ignore_errors: yes
+      docker_container:
+        name: calculator-container
+        state: absent
 
     - name: Run Docker Container
-      command: >
-        docker run -d --name calculator-container -p 8081:8081 gupta9939/calculator_main_project_final:latest
+      docker_container:
+        name: calculator-container
+        image: gupta9939/calculator_main_project_final:latest
+        state: started
+        restart_policy: always
+        ports:
+          - "8081:8081"
+        detach: yes
